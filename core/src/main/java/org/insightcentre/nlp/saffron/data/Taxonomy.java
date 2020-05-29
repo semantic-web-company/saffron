@@ -136,24 +136,6 @@ public class Taxonomy {
      * Get the string for the root term
      * @return
      */
-    public String getStatus() {
-        return status;
-    }
-
-
-    /**
-     * Set the string for the root topic
-     * @return
-     */
-    public void setStatus(String status) {
-
-        this.status = status;
-    }
-
-    /**
-     * Get the string for the root topic
-     * @return
-     */
     public String getRoot() {
         return root;
     }
@@ -536,33 +518,6 @@ public class Taxonomy {
     }
 
     /**
-     * Calculates the number of leaf nodes in the taxonomy
-     * @return The number of leaf nodes in the taxonomy
-     */
-    public int numberOfLeafNodes() {
-    	int numberOfLeaves = 0;
-    	
-    	for(Taxonomy child: children) {
-    		if (child.children.isEmpty()) {
-    			numberOfLeaves++;
-    		} else {
-    			numberOfLeaves+=child.numberOfLeafNodes();
-    		}
-    	}
-    	
-    	return numberOfLeaves;
-    }
-    
-    /**
-     * Calculates the number of branch nodes in the taxonomy
-     * @return The number of branch nodes in the taxonomy
-     */
-    public int numberOfBranchNodes() {
-    	//The root node is neither a leaf or a branch
-    	return this.size() - (numberOfLeafNodes() + 1); 
-    }
-    
-    /**
      * Return all leaf nodes and their correspondent depths
      *
      * @param currentDepth The depth of the current node
@@ -652,38 +607,6 @@ public class Taxonomy {
     }
 
     /**
-     * Median degree of nodes in the taxonomy (using graph theory, i.e. any edge counts including parent)
-     * @return The median of the degree of nodes in the taxonomy
-     */ 
-    public double medianDegree() {
-    	Map<String,Integer> nodeDegrees = this.nodeDegrees(true);
-    	return calculateMedian(nodeDegrees.values());
-    }
-    
-    /**
-     * Return all nodes and their correspondent degrees (using graph theory, i.e. any edge counts including parent)
-     * 
-     * @param isRoot Inform if the current node is the root of the whole graph
-     * @return A map with 
-     * 		'key': the label(root) of each node, and 
-     * 		'value': the degree of each node.
-     */
-    protected Map<String, Integer> nodeDegrees(boolean isRoot) {
-    	Map<String, Integer> nodeDegrees = new HashMap<String, Integer>();
-    	
-    	for(Taxonomy child: children) {
-    		nodeDegrees.putAll(child.nodeDegrees(false));
-    	}
-    	
-		if(isRoot)
-			nodeDegrees.put(root, children.size());
-		else
-			nodeDegrees.put(root, children.size() + 1);
-    	
-		return nodeDegrees;
-    }
-    
-    /**
      * Verify if there are no loops in this taxonomy
      * @return true if there are no loops
      */
@@ -706,19 +629,6 @@ public class Taxonomy {
             terms.remove(root);
             return true;
         }
-    }
-    
-    /**
-     * Verifies if all scores in the tree are real (except the root)
-     * @return 
-     */
-    public boolean scoresValid() {
-        return children.stream().allMatch((Taxonomy t) -> t._scoresValid());
-        
-    }
-    
-    private boolean _scoresValid() {
-        return Double.isFinite(linkScore) && children.stream().allMatch((Taxonomy t) -> t._scoresValid());
     }
 
     /**
