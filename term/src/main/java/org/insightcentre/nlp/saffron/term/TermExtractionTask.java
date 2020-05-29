@@ -123,6 +123,7 @@ public class TermExtractionTask implements Runnable {
 
             stats.documents = 1;
 
+            System.err.println(stats);
             synchronized (summary) {
                 summary.add(stats);
                 if(doc.date != null && temporalFrequency != null)

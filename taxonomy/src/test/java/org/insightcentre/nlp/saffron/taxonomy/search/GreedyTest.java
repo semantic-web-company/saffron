@@ -119,4 +119,35 @@ public class GreedyTest {
         assert(result.children.stream().anyMatch((Taxonomy t) -> t.root.equals("b") && t.status == Status.none));
         assert(result.children.stream().anyMatch((Taxonomy t) -> t.root.equals("ab") && t.status == Status.accepted));
     }
+    
+        /**
+     * Test of extractTaxonomy method, of class GreedySplitTaxoExtract.
+     */
+    @Test
+    public void testExtractTaxonomyWithBlackWhiteList() throws Exception {
+        System.out.println("extractTaxonomyWithBlackWhiteList");
+        HashMap<String, Topic> topics = new HashMap<>();
+        addTopic(topics, "", 0.0);
+        addTopic(topics, "a", 0.0);
+        addTopic(topics, "b", 0.0);
+        addTopic(topics, "c", 0.0);
+        addTopic(topics, "ab", 0.0);
+        addTopic(topics, "ac", 0.0);
+        addTopic(topics, "abc", 0.0);
+        addTopic(topics, "ba", 0.0);
+        addTopic(topics, "bd", 0.0);
+        
+        Set<TaxoLink> whiteList = new HashSet<>();
+        Set<TaxoLink> blackList = new HashSet<>();
+        whiteList.add(new TaxoLink("", "ab"));
+        blackList.add(new TaxoLink("", "c"));
+        
+        Greedy instance = new Greedy(new SumScore(new TestSupervisedTaxo()));
+        Taxonomy result = instance.extractTaxonomyWithBlackWhiteList(topics, whiteList, blackList);
+        assertEquals("", result.root);
+        assertEquals(3, result.children.size());
+        assert(result.children.stream().anyMatch((Taxonomy t) -> t.root.equals("a")));
+        assert(result.children.stream().anyMatch((Taxonomy t) -> t.root.equals("b")));
+        assert(result.children.stream().anyMatch((Taxonomy t) -> t.root.equals("ab")));
+    }
 }

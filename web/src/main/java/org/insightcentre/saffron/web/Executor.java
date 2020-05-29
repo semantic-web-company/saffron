@@ -459,6 +459,8 @@ public class Executor extends AbstractHandler {
         ObjectMapper mapper = new ObjectMapper();
         ObjectWriter ow = mapper.writerWithDefaultPrettyPrinter();
 
+
+
         final File datasetFolder = new File(parentDirectory, saffronDatasetName);
         if (!datasetFolder.exists()) {
             if (!datasetFolder.mkdirs()) {
@@ -515,6 +517,7 @@ public class Executor extends AbstractHandler {
         if (storeCopy.equals("true"))
             ow.writeValue(new File(new File(parentDirectory, saffronDatasetName), "terms.json"), terms);
         _status.setStageComplete("Saving linked terms", saffronDatasetName);
+
 
         _status.stage++;
 

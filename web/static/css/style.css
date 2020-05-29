@@ -413,6 +413,32 @@ g.node:hover text {
   background-color: #F15B52
 }
 
+#zoom_in, #zoom_out {
+  padding: 0 8px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 30px
+}
+
+#zoom_in:focus, #zoom_out:focus{
+  outline: none
+}
+
+#zoom_in {
+  position: absolute;
+  top: 80px;
+  left: 45px;
+}
+
+#zoom_out {
+  position: absolute;
+  top: 80px;
+  left: 96px;
+  background-color: #F15B52
+}
+
 /*treemap*/
 
 #graph {
