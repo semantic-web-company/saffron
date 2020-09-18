@@ -2,6 +2,8 @@ package org.insightcentre.nlp.saffron.config;
 
 import org.insightcentre.nlp.saffron.data.SaffronPath;
 
+import java.io.File;
+
 /**
  * Configuration for the Knowledge Graph Extraction step
  * 
@@ -10,9 +12,9 @@ import org.insightcentre.nlp.saffron.data.SaffronPath;
  */
 public class KnowledgeGraphExtractionConfiguration {
 
-	public SaffronPath kerasModelFile = new SaffronPath("../models/model_keras.h5");
+	public SaffronPath kerasModelFile = new SaffronPath(System.getenv("KERAS_MODEL"));
 	
-	public SaffronPath bertModelFile = new SaffronPath("../models/bert_model");
+	public SaffronPath bertModelFile = new SaffronPath(System.getenv("BERT_MODEL"));
 	
 	public double synonymyThreshold = 0.5;
 	
