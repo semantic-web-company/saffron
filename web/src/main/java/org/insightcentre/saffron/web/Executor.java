@@ -566,15 +566,15 @@ public class Executor extends AbstractHandler {
         data.setTaxonomy(saffronDatasetName, graph);
         _status.setStageComplete("Building term map and taxonomy", saffronDatasetName);
 
-//      _status.setStageStart("Building knowledge graph", saffronDatasetName);
-//      BERTBasedRelationClassifier relationClassifier = new BERTBasedRelationClassifier(config.kg.kerasModelFile, config.kg.bertModelFile);
-//      KGSearch kgSearch = KGSearch.create(config.taxonomy.search, config.kg, relationClassifier, termMap.keySet());
-//      final KnowledgeGraph kGraph = kgSearch.extractKnowledgeGraphWithDenialAndAllowanceList(termMap,
-//              allowDenyList.getRelationAllowanceList(), allowDenyList.getRelationDenialList());
-//      if (storeCopy.equals("true"))
-//          ow.writeValue(new File(new File(parentDirectory, saffronDatasetName), "knowledge_graph.json"), kGraph);
-//      data.setKnowledgeGraph(saffronDatasetName, kGraph);
-//      _status.setStageComplete("Building knowledge graph", saffronDatasetName);
+        _status.setStageStart("Building knowledge graph", saffronDatasetName);
+        BERTBasedRelationClassifier relationClassifier = new BERTBasedRelationClassifier(config.kg.kerasModelFile.toString(), config.kg.bertModelFile.toString());
+        KGSearch kgSearch = KGSearch.create(config.taxonomy.search, config.kg, relationClassifier, termMap.keySet());
+        final KnowledgeGraph kGraph = kgSearch.extractKnowledgeGraphWithDenialAndAllowanceList(termMap,
+               allowDenyList.getRelationAllowanceList(), allowDenyList.getRelationDenialList());
+        if (storeCopy.equals("true"))
+            ow.writeValue(new File(new File(parentDirectory, saffronDatasetName), "kg.json"), kGraph);
+        data.setKnowledgeGraph(saffronDatasetName, kGraph);
+        _status.setStageComplete("Building knowledge graph", saffronDatasetName);
 
         _status.completed = true;
     }

@@ -10,9 +10,9 @@ import org.insightcentre.nlp.saffron.data.SaffronPath;
  */
 public class KnowledgeGraphExtractionConfiguration {
 
-	public SaffronPath kerasModelFile = null;
+	public SaffronPath kerasModelFile = new SaffronPath("../models/model_keras.h5");
 	
-	public SaffronPath bertModelFile = null;
+	public SaffronPath bertModelFile = new SaffronPath("../models/bert_model");
 	
 	public double synonymyThreshold = 0.5;
 	
